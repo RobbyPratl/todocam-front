@@ -23,9 +23,12 @@ function Login({ navigation }) {
       .then((r) => r.json())
       .then((r) => {
         console.log("Response ", r.token);
-        AsyncStorage.setItem("X-Access-Token", r.token).then(
-          navigation.navigate("HomeScreen")
-        );
+        AsyncStorage.setItem("X-Auth-Token", r.token)
+          .then(() => AsyncStorage.setItem("user", username))
+          .then(() => {
+            console.log("set async storage");
+          })
+          .then(navigation.navigate("HomeScreen"));
       })
       .catch((e) => {
         console.log("Error: ", e);
