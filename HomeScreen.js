@@ -82,43 +82,46 @@ function HomeScreen({ navigation }) {
   // The Add New button is simply for testing and designing purposes.
   return (
     <View style={{ flex: 0, alignItems: "center", justifyContent: "center" }}>
-      <Modal isVisible={modalVisible}>
-        <View style={{ flex: 0 }}>
-          <TextInput
-            placeholder="Enter Task"
-            onChangeText={(e) => {
-              setTaskText(e);
-            }}
-          ></TextInput>
-          <Button
-            title="Add Post"
-            onPress={() => createNewPost().then(setModalVisible(!modalVisible))}
-          ></Button>
-          <Button
-            onPress={() => {
-              setModalVisible(!modalVisible);
-            }}
-            title="Exit"
-          ></Button>
-        </View>
-      </Modal>
-      <IconButton
-        icon={(props) => <Icon name="refresh" />}
-        color="white"
-        onPress={fetchUserTasks}
-        //loadingIndicator="⏳"
-      />
-
-      <Button
-        onPress={() => {
-          setModalVisible(!modalVisible);
-        }}
-        title="Add New"
-      ></Button>
       <ScrollView>
+        <Modal isVisible={modalVisible}>
+          <View style={{ flex: 0 }}>
+            <TextInput
+              placeholder="Enter Task"
+              onChangeText={(e) => {
+                setTaskText(e);
+              }}
+            ></TextInput>
+            <Button
+              title="Add Post"
+              onPress={() =>
+                createNewPost().then(setModalVisible(!modalVisible))
+              }
+            ></Button>
+            <Button
+              onPress={() => {
+                setModalVisible(!modalVisible);
+              }}
+              title="Exit"
+            ></Button>
+          </View>
+        </Modal>
+        <IconButton
+          icon={(props) => <Icon name="refresh" />}
+          color="white"
+          onPress={fetchUserTasks}
+          //loadingIndiator="⏳"
+        />
+
+        <Button
+          onPress={() => {
+            setModalVisible(!modalVisible);
+          }}
+          title="Add New"
+        ></Button>
         <View>
           {userPosts.map((message, index) => (
             <ToDoRow
+              token={token}
               key={index}
               visible={message.visible}
               _id={message._id}
