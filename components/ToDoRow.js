@@ -11,7 +11,9 @@ import ExpoCamera from "./CameraButton";
 
 function ToDoRow(props) {
   //console.log("Created a row");
-
+  const createBadge = (color) => {
+    return;
+  };
   const [modalVisible, setModalVisible] = useState(false);
   const devTest = () => {
     console.log(props._id);
@@ -27,7 +29,9 @@ function ToDoRow(props) {
           },
         ]}
       >
-        <Badge style={{ marginRight: 10, marginTop: 15 }} />
+        <Badge
+          style={{ marginRight: 10, marginTop: 15, backgroundColor: "red" }}
+        />
         <Text
           onPress={() => {
             setModalVisible(!modalVisible);
@@ -48,7 +52,7 @@ function ToDoRow(props) {
             </TouchableWithoutFeedback>
           }
         >
-          <ExpoCamera token={props.token} />
+          <ExpoCamera token={props.token} _id={props._id} />
         </Modal>
       </View>
     );

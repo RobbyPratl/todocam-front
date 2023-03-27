@@ -22,13 +22,15 @@ function Login({ navigation }) {
     })
       .then((r) => r.json())
       .then((r) => {
-        console.log("Response ", r.token);
-        AsyncStorage.setItem("X-Auth-Token", r.token)
-          .then(() => AsyncStorage.setItem("user", username))
-          .then(() => {
-            console.log("set async storage");
-          })
-          .then(navigation.navigate("HomeScreen"));
+        if (r.token) {
+          console.log("Response ", r.token);
+          AsyncStorage.setItem("X-Auth-Token", r.token)
+            .then(() => AsyncStorage.setItem("user", username))
+            .then(() => {
+              console.log("set async storage");
+            })
+            .then(navigation.navigate("HomeScreen"));
+        }
       })
       .catch((e) => {
         console.log("Error: ", e);
@@ -46,6 +48,7 @@ function Login({ navigation }) {
           helperText="username"
         ></TextInput>
         <TextInput
+          secureTextEntry={true}
           onChangeText={(e) => {
             setPassword(e);
           }}

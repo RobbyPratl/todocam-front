@@ -12,6 +12,7 @@ export default function ExpoCamera(props) {
   const [image, setImage] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
+  const [imageUrl, setImageUrl] = useState("");
   const cameraRef = useRef(null);
   const [pictureSaved, setPictureSaved] = useState(false);
   useEffect(() => {
@@ -33,6 +34,21 @@ export default function ExpoCamera(props) {
       }
     }
   };
+  function fetchImage() {
+    const url = `https://taskcam-backend.onrender.com/${props._id}`;
+    const headers = new Headers({
+      "X-Auth-Token": props.token,
+    });
+    const options = {
+      method: "GET",
+      headers: headers,
+    };
+    return fetch(url, options)
+      .then((res) => res.blob())
+      .then((data) => {
+        setImageUrl;
+      });
+  }
 
   const savePicture = async () => {
     const formData = new FormData();
@@ -42,15 +58,18 @@ export default function ExpoCamera(props) {
       type: "image/jpeg",
     });
 
-    fetch("https://taskcam-backend.onrender.com/complete_task", {
+    fetch(`https://taskcam-backend.onrender.com/complete_task/${props._id}`, {
       method: "POST",
       headers: {
         "Content-Type": "multipart/form-data",
         "X-Auth-Token": props.token,
+        id: props._id,
       },
       body: formData,
     })
-      .then(setPictureSaved(true))
+      .then((res) => {
+        setPictureSaved(true);
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -60,7 +79,13 @@ export default function ExpoCamera(props) {
     return <Text>No access to camera</Text>;
   }
   if (pictureSaved === true) {
-    return;
+    console.log(image);
+    fetchImage();
+    return (
+      <View>
+        <Image source={{ uri: image }}></Image>
+      </View>
+    );
   }
 
   return (
