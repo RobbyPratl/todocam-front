@@ -8,11 +8,16 @@ import {
 import { useState } from "react";
 import Modal from "react-native-modal";
 import ExpoCamera from "./CameraButton";
-
+import Circle from "./Circle";
+import CompletedTask from "./CompletedTask";
 function ToDoRow(props) {
   //console.log("Created a row");
-  const createBadge = (color) => {
-    return;
+  const createBadge = (state) => {
+    if (state == false) {
+      return "green";
+    } else {
+      return "red";
+    }
   };
   const [modalVisible, setModalVisible] = useState(false);
   const devTest = () => {
@@ -25,13 +30,13 @@ function ToDoRow(props) {
           {
             // Try setting `flexDirection` to `"row"`.
             flexDirection: "row",
-            float: "left",
           },
         ]}
       >
-        <Badge
-          style={{ marginRight: 10, marginTop: 15, backgroundColor: "red" }}
-        />
+        {/*<Badge
+          style={{ marginRight: 10, marginTop: 15, backgroundColor: "green" }}
+      />*/}
+        <Circle></Circle>
         <Text
           onPress={() => {
             setModalVisible(!modalVisible);
@@ -54,6 +59,19 @@ function ToDoRow(props) {
         >
           <ExpoCamera token={props.token} _id={props._id} />
         </Modal>
+      </View>
+    );
+  } else {
+    return (
+      <View
+        style={[
+          {
+            // Try setting `flexDirection` to `"row"`.
+            flexDirection: "row",
+          },
+        ]}
+      >
+        <Text>{"Balls"}</Text>
       </View>
     );
   }

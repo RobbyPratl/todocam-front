@@ -14,6 +14,7 @@ import {
 } from "@react-native-material/core";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import FormatDate from "./FormatDate.js";
 
 function HomeScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -81,7 +82,28 @@ function HomeScreen({ navigation }) {
 
   // The Add New button is simply for testing and designing purposes.
   return (
-    <View style={{ flex: 0, alignItems: "center", justifyContent: "center" }}>
+    // This view encompasses all of the screen currently
+    <View
+      style={{
+        flex: 0,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Text
+        style={{
+          width: 213,
+          height: 19,
+          lineHeight: 24 + "px",
+          color: "#068163",
+          textAlign: "center",
+          marginTop: 5,
+          marginBottom: 7,
+          overflow: "visible",
+        }}
+      >
+        {FormatDate()}
+      </Text>
       <ScrollView>
         <Modal isVisible={modalVisible}>
           <View style={{ flex: 0 }}>
@@ -116,15 +138,17 @@ function HomeScreen({ navigation }) {
           onPress={() => {
             setModalVisible(!modalVisible);
           }}
-          title="Add New"
+          title="New"
         ></Button>
-        <View>
+
+        <View style={{ alignItems: "flex-start" }}>
           {userPosts.map((message, index) => (
             <ToDoRow
               token={token}
               key={index}
               visible={message.visible}
               _id={message._id}
+              filename={message.image_data}
               message={message.message}
             />
           ))}
